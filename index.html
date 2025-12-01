@@ -263,6 +263,34 @@ div.b {
 <title>Page Title</title>
 </head>
 <body>
+	<script>
+  const form = document.getElementById('padelForm');
+  // Asegúrate de que esta URL es la de tu Google Script
+  const scriptURL = 'https://script.google.com/macros/s/AKfycby0v25CsuegwkKeA4yYShCytO_vV3lL0-Bw_OaKI-gwS45jxNcd9WNRiObuhl3P1fLAIA/exec';
+
+  form.addEventListener('submit', e => {
+    e.preventDefault(); // Evita el envío tradicional
+    
+    // Muestra un mensaje de carga (opcional)
+    alert("Enviando formulario..."); 
+
+    // Envía los datos usando la API Fetch
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        // La respuesta del script se recibe aquí
+        if (response.ok) {
+          alert('¡Gracias! Tu registro ha sido enviado con éxito.');
+          form.reset(); // Limpia los campos del formulario
+        } else {
+          throw new Error('Error en la respuesta del servidor.');
+        }
+      })
+      .catch(error => {
+        alert('Ocurrió un error al enviar: ' + error.message);
+        console.error('Error!', error.message);
+      });
+  });
+</script>
 
 
 </body>
