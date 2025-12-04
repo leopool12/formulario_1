@@ -223,76 +223,72 @@ div.b {
       <h1 style="background-
 <body>
 <div class="b">
-<h1 style="background-color:floralwhite;">Compartenos tu informacion para tener acesso excluisvo a nuestros productos</h1>
-<form 
-  method="POST" 
-  action="https://script.google.com/macros/s/AKfycby0v25CsuegwkKeA4yYShCytO_vV3lL0-Bw_OaKI-gwS45jxNcd9WNRiObuhl3P1fLAIA/exec"
->
-<fieldset>
-    <legend>Unete a la Comunidad Padel</legend>
-<label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="usuario_nombre" placeholder="Nombre (s)">
-	<br>
-    <br>
-    <label for="correo">Correo electrónico:</label>
-	<input type="email" id="correo" name="correo" placeholder="ejemplo@.com" required>
-	<br>
-    <br> 
-<label for="telefono">Teléfono:</label>
-<input type="tel" id="telefono" name="telefono" placeholder="12-223-2987" required>
-</fieldset>
-	<br>
-    <br>
- <form id="padelForm"> 
-  <button type="submit">Enviar Formulario</button>
-</form>
+    <h1 style="background-color:floralwhite;">
+        Compartenos tu informacion para tener acceso exclusivo a nuestros productos
+    </h1>
 
-<footer>
+    <form id="padelForm"> 
+        <fieldset>
+            <legend>Unete a la Comunidad Padel</legend>
+            
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="usuario_nombre" placeholder="Nombre (s)">
+            <br><br>
+            
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" id="correo" name="correo" placeholder="ejemplo@.com" required>
+            <br><br>
+            
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="12-223-2987" required>
+        </fieldset>
+        <br><br>
+        <button type="submit">Enviar Formulario</button>
+    </form>
+</div>
+
+<script>
+    // URL de tu Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby0v25CsuegwkKeA4yYShCytO_vV3lL0-Bw_OaKI-gwS45jxNcd9WNRiObuhl3P1fLAIA/exec';
     
-</footer>
+    // Obtenemos el formulario por su ID
+    const form = document.getElementById('padelForm');
 
-</body>
-</html>
-		
-    <p style=background-color:floralwhite>©️ 2025 PadelPlace. Todos los derechos reservados.</p>
-  </footer>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
-	<script>
-  const form = document.getElementById('padelForm');
-  // Asegúrate de que esta URL es la de tu Google Script
-  const scriptURL = 'https://script.google.com/macros/s/AKfycby0v25CsuegwkKeA4yYShCytO_vV3lL0-Bw_OaKI-gwS45jxNcd9WNRiObuhl3P1fLAIA/exec';
-
-  form.addEventListener('submit', e => {
-    e.preventDefault(); // Evita el envío tradicional
-    
-    // Muestra un mensaje de carga (opcional)
-    alert("Enviando formulario..."); 
-
-    // Envía los datos usando la API Fetch
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => {
-        // La respuesta del script se recibe aquí
-        if (response.ok) {
-          alert('¡Gracias! Tu registro ha sido enviado con éxito.');
-          form.reset(); // Limpia los campos del formulario
-        } else {
-          throw new Error('Error en la respuesta del servidor.');
-        }
-      })
-      .catch(error => {
-        alert('Ocurrió un error al enviar: ' + error.message);
-        console.error('Error!', error.message);
-      });
-  });
+    form.addEventListener('submit', e => {
+        e.preventDefault(); // Detiene el envío normal (para que no te redirija)
+        
+        // Desactivamos el botón y mostramos un mensaje temporal
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+        
+        // Enviamos los datos usando Fetch API
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                // El script devuelve JSON con {"result": "success"}
+                if (response.ok) {
+                    // Si es exitoso, mostramos una alerta y limpiamos el formulario.
+                    alert('¡Gracias! Tu registro ha sido enviado con éxito.');
+                    form.reset(); 
+                } else {
+                    alert('Error: No se pudo conectar con el servidor de Google.');
+                }
+            })
+            .catch(error => {
+                alert('Ocurrió un error al enviar: ' + error.message);
+                console.error('Error!', error.message);
+            })
+            .finally(() => {
+                // Restauramos el botón después de la operación
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar Formulario';
+            });
+    });
 </script>
 
-
+<footer>
+    <p style="background-color:floralwhite">©️ 2025 PadelPlace. Todos los derechos reservados.</p>
+</footer>
 </body>
 </html>
 	
